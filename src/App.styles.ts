@@ -37,8 +37,13 @@ export const Wrapper = styled.div `
     margin: 0;
   }
 
+  select {
+    margin: 20px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
+  }
+
   h1 {
-    font-family: Fascinate Inline, 'Arial Narrow Bold', sans-serif;
+    font-family: 'Andale Mono', sans-serif;
     background-image: linear-gradient(180deg, #fff, #87f1ff);
     background-size: 100%;
     background-clip: text;

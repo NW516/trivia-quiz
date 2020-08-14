@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { fetchQuizQuestions } from './API';
 // Components
 import QuestionCard from './components/QuestionCard';
 // Types
-import { QuestionState, Difficulty } from './API';
+import { QuestionState, Difficulty, Category } from './API';
 
 import { GlobalStyle, Wrapper } from './App.styles';
 
@@ -17,6 +17,14 @@ export type AnswerObject = {
 const TOTAL_QUESTIONS = 10;
 
 const App = () => {
+  let categoryList: Array<any> = [];
+  let difficultyList: Array<any> = [];
+
+  Object.entries(Category).forEach(item => {
+    categoryList.push(<option value={item[1]}>{item[0]}</option>)});
+
+  Object.entries(Difficulty).forEach(item => {
+    difficultyList.push(<option value={item[1]}>{item[1]}</option>)});
 
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState<QuestionState[]>([]);
@@ -24,8 +32,23 @@ const App = () => {
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([]);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
+  const [category, setCategory] = useState("9");
+  const [difficulty, setDifficulty] = useState("easy");
 
-  console.log(fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.EASY));
+  const handleCategoryChange = () => {
+    const userCategory = (document.getElementById("category") as HTMLInputElement).value;
+    setCategory(userCategory);
+    console.log(category);
+  }
+
+  const handleDifficultyChange = () => {
+    const userDifficulty = (document.getElementById("difficulty") as HTMLInputElement).value;
+    setDifficulty(userDifficulty);
+    console.log(difficulty);
+  }
+
+
+  //console.log(fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.EASY));
 
   const startTrivia = async() => {
     setLoading(true);
@@ -33,7 +56,8 @@ const App = () => {
 
     const newQuestions = await fetchQuizQuestions(
       TOTAL_QUESTIONS,
-      Difficulty.EASY
+      difficulty,
+      category
     );
 
     setQuestions(newQuestions);
@@ -77,13 +101,22 @@ const App = () => {
     <>
     <GlobalStyle />
     <Wrapper>
-    <h1>REACT QUIZ</h1>
+    <h1>Trivia Quiz</h1>
     {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
+      <>
+      <select id="category" onChange={handleCategoryChange}>
+      {categoryList}
+      </select>
+      <select id="difficulty" onChange={handleDifficultyChange}>
+      {difficultyList}
+      </select>
       <button className="start" onClick={startTrivia}>
       Start
       </button>
+      </>
     ) : null}
-    {!gameOver ? <p className="score">Score: {score}</p> : null}
+    {!gameOver ?
+      <p className="score">Score: {score}</p> : null}
     {loading ? <p>Loading Questions...</p> : null}
     {!loading && !gameOver && (
       <QuestionCard
