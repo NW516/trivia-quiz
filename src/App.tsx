@@ -124,6 +124,7 @@ const App = () => {
       totalQuestions={TOTAL_QUESTIONS}
       question={questions[number].question}
       answer={questions[number].answers}
+      correctOne={questions[number].correct_answer}
       userAnswer={userAnswers ? userAnswers[number] : undefined}
       callback={checkAnswer}
       /> )

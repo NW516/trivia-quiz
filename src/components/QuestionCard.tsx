@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AnswerObject } from '../App';
 import { Wrapper, ButtonWrapper } from './QuestionCard.styles';
 
@@ -7,17 +7,54 @@ type Props = {
   answer: string[];
   callback: (e: React.MouseEvent<HTMLButtonElement>) => void;
   userAnswer: AnswerObject | undefined;
+  correctOne: string;
   questionNum: number;
   totalQuestions: number;
 }
+
+
 const QuestionCard: React.FC<Props> = ({
   question,
   answer,
   callback,
   userAnswer,
+  correctOne,
   questionNum,
   totalQuestions
-}) => (
+}) => {
+  const [helpRequested, setHelpRequested] = useState(false);
+
+  const giveHelp = (ans: string[], currAns: string) => {
+    console.log("before removing: " + ans + " and helpRequested is: " + helpRequested);
+    console.log("correct answer is: " + currAns);
+    if (helpRequested) {
+      setHelpRequested(false);
+    } else {
+      setHelpRequested(true);
+    }
+    answer = removeRandomItems(ans, currAns);
+    console.log("after removing");
+    console.log(answer);
+  }
+
+  const removeRandomItems = (arr: string[], currAns: string) => {
+          for(let i=0; i<2; i++) {
+            console.log("i is: " + i);
+            let randomIndex = Math.floor(Math.random()*arr.length);
+            console.log("randomindex: " + randomIndex);
+            let item = arr[randomIndex];
+            if ((item !== undefined) && (item !== currAns)) {
+              arr.splice(arr.indexOf(item), 1);
+              console.log("removed: " + item);
+            } else {
+              console.log("try again");
+              i -= 1;
+            }
+          }
+          return(arr);
+  }
+
+  return (
   <Wrapper>
     <p className="number">
     Question: {questionNum} / {totalQuestions}
@@ -35,8 +72,9 @@ const QuestionCard: React.FC<Props> = ({
         </ButtonWrapper>
         )
       )}
+      <button disabled={answer.length < 4 ? true : false} id="needHelp" onClick={() => giveHelp(answer, correctOne)}>I Need Help!</button>
     </div>
   </Wrapper>
-);
+)};
 
 export default QuestionCard;
