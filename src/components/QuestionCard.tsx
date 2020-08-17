@@ -25,29 +25,21 @@ const QuestionCard: React.FC<Props> = ({
   const [helpRequested, setHelpRequested] = useState(false);
 
   const giveHelp = (ans: string[], currAns: string) => {
-    console.log("before removing: " + ans + " and helpRequested is: " + helpRequested);
-    console.log("correct answer is: " + currAns);
     if (helpRequested) {
       setHelpRequested(false);
     } else {
       setHelpRequested(true);
     }
     answer = removeRandomItems(ans, currAns);
-    console.log("after removing");
-    console.log(answer);
   }
 
   const removeRandomItems = (arr: string[], currAns: string) => {
           for(let i=0; i<2; i++) {
-            console.log("i is: " + i);
             let randomIndex = Math.floor(Math.random()*arr.length);
-            console.log("randomindex: " + randomIndex);
             let item = arr[randomIndex];
             if ((item !== undefined) && (item !== currAns)) {
               arr.splice(arr.indexOf(item), 1);
-              console.log("removed: " + item);
             } else {
-              console.log("try again");
               i -= 1;
             }
           }

@@ -38,17 +38,13 @@ const App = () => {
   const handleCategoryChange = () => {
     const userCategory = (document.getElementById("category") as HTMLInputElement).value;
     setCategory(userCategory);
-    console.log(category);
   }
 
   const handleDifficultyChange = () => {
     const userDifficulty = (document.getElementById("difficulty") as HTMLInputElement).value;
     setDifficulty(userDifficulty);
-    console.log(difficulty);
   }
 
-
-  //console.log(fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.EASY));
 
   const startTrivia = async() => {
     setLoading(true);
