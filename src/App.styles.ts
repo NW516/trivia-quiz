@@ -18,7 +18,7 @@ export const GlobalStyle = createGlobalStyle`
 
   * {
     box-sizing: border-box;
-    font-family: 'Catamaran', sans-serif;
+    font-family: 'Viga', sans-serif;
   }
 `;
 
@@ -43,7 +43,7 @@ export const Wrapper = styled.div `
   }
 
   h1 {
-    font-family: 'Andale Mono', sans-serif;
+    font-family: 'Viga', sans-serif;
     background-image: linear-gradient(180deg, #fff, #87f1ff);
     background-size: 100%;
     background-clip: text;

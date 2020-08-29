@@ -55,7 +55,7 @@ const App = () => {
       difficulty,
       category
     );
-
+    console.log(newQuestions);
     setQuestions(newQuestions);
     setScore(0);
     setUserAnswers([]);
@@ -97,7 +97,7 @@ const App = () => {
     <>
     <GlobalStyle />
     <Wrapper>
-    <h1>Trivia Quiz</h1>
+    <h1>TRIVIA QUIZ</h1>
     {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
       <>
       <select id="category" onChange={handleCategoryChange}>
