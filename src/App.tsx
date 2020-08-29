@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { fetchQuizQuestions } from './API';
 // Components
 import QuestionCard from './components/QuestionCard';
@@ -21,10 +21,10 @@ const App = () => {
   let difficultyList: Array<any> = [];
 
   Object.entries(Category).forEach(item => {
-    categoryList.push(<option value={item[1]}>{item[0]}</option>)});
+    categoryList.push(<option key={item[1]} value={item[1]}>{item[0]}</option>)});
 
   Object.entries(Difficulty).forEach(item => {
-    difficultyList.push(<option value={item[1]}>{item[1]}</option>)});
+    difficultyList.push(<option key={item[1]} value={item[1]}>{item[1]}</option>)});
 
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState<QuestionState[]>([]);
@@ -35,16 +35,14 @@ const App = () => {
   const [category, setCategory] = useState("9");
   const [difficulty, setDifficulty] = useState("easy");
 
-  const handleCategoryChange = () => {
-    const userCategory = (document.getElementById("category") as HTMLInputElement).value;
-    setCategory(userCategory);
+
+  const handleDifficultyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDifficulty(e.target.value);
   }
 
-  const handleDifficultyChange = () => {
-    const userDifficulty = (document.getElementById("difficulty") as HTMLInputElement).value;
-    setDifficulty(userDifficulty);
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategory(e.target.value);
   }
-
 
   const startTrivia = async() => {
     setLoading(true);
